@@ -1,15 +1,5 @@
 
 
-
-// player object:
-// player name
-// player score
-// player symbol
-
-// diagonal
-// 0,4,8
-// 2,4,6
-
 const playerOne = createPlayer('julius', 'X')
 const playerTwo = createPlayer('mark', 'O')
 const board = document.querySelector('.board');
@@ -21,18 +11,22 @@ let current = true;
 let next = false;
 
 for (let i=0; i < 9; i++) {
-    console.log('added a cell!')
+
     const cell = document.createElement('div');
+
     cell.classList.add('cell')
+
     cell.addEventListener('click', (element) => {
         // cell is clicked!
         position = cellArray.indexOf(cell);
         
         turn = current == true ? playerOne : playerTwo
         
-        result = gameBoard.gameBoardUpdate(turn.symbol,position);
-
-
+        if (gameBoard.gameBoardUpdate(turn.symbol,position)) {
+            // move is complete! or valid
+            current = !current;
+            next = !next;
+        }
         if (gameBoard.winCheck().getResult()) {
             // if there is a winner!
             
@@ -42,27 +36,17 @@ for (let i=0; i < 9; i++) {
             gameBoard.boardReset();
             current = true;
             next = false;
-        } 
-        
+        }        
         if (gameBoard.drawCheck()) {
             // if there is a draw!
             // start over!
             gameBoard.boardReset();
             current = true;
             next = false;
-        }
-        
-        if (result) {
-            // move is complete! or valid
-            current = !current;
-            next = !next;
-        } 
 
-        boardRefresh(gameBoard.gameArray, cellArray)
-        
-
-        // if move is valid, then we move to player two
-        
+        }      
+        boardRefresh(gameBoard.gameArray, cellArray)     
+        // if move is valid, then we move to player two    
     })
     board.appendChild(cell)
 
@@ -71,14 +55,12 @@ for (let i=0; i < 9; i++) {
 const cellArray = Array.from(board.children);
 
 function boardRefresh(gameArray,cellArray) {
+    // refreshes board on DOM
     for (let i=0;i<9;i++) {
-
         gameArray[i] == 'empty' ? cellArray[i].textContent = '' : cellArray[i].textContent = gameArray[i];
     }
 
 }
-
-
 
 const gameBoard = {
     gameArray: Array(9).fill('empty'),
@@ -116,6 +98,7 @@ const gameBoard = {
                 return {getResult, getWinningPlayer};
             }
         }
+
         start = 0;
         for (let i = 0; i < 3; i++) {
             stagingArr = []
@@ -144,7 +127,6 @@ const gameBoard = {
                 stagingArr.push(this.gameArray[start])
                 console.log(start + '<-- start index')
                 start += skip;  
-
             }
             console.log(stagingArr)
             start = 2;
@@ -178,7 +160,6 @@ const gameBoard = {
     }
 }
 
-
 function createPlayer(name, symbol) {
     
     let score = 0; 
@@ -186,27 +167,3 @@ function createPlayer(name, symbol) {
     const getScore = () => score;
     return {name, symbol, addScore, getScore} 
 }
-
-
-// let turn;
-
-// while (winYet()) {
-
-//     // first move!
-//     // player one!
-//     turn = playerOne
-    
-//     gameBoard.gameBoardUpdate(position,turn.symbol)
-//     console.log(gameBoard.gameArray)
-
-
-
-
-
-//     playerOne.addScore();
-//     console.log(playerOne.getScore())
-
-
-
-
-// }

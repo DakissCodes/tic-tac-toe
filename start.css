@@ -1,0 +1,123 @@
+:root {
+    --main-clr: #495E57;
+    --secondary-clr: #354942;
+    --accent-white: #F5F7F8;
+}
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: 'Jost', sans-serif;
+    /* border: 1px solid grey; */
+
+}
+body {
+    display: flex;
+    height: 100vh;
+    background-color: var(--accent-white);
+}
+
+.remove {
+    display: none;
+}
+
+
+
+.main-container {
+    /* flex container */
+    width: 1000px;
+    height: 100%;
+
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 20px;
+}
+
+.button-click-animate {
+    
+    animation: buttonClicked 0.3s ease-in 0.1s 1 forwards, slideOutRight 1s ease-in .7s 1 forwards;
+}
+
+.slide-out-right {
+    animation: slideOutRight 1s ease-in .7s 1 forwards;
+}
+
+.slide-in-right {
+    animation: slideInRight 1s ease-out .1s 1 backwards;
+}
+
+.button-template {
+    height: 50px;
+    width: 250px;
+    /* button design */
+    background-color: var(--main-clr);
+    border-radius: 7px;
+    border-top: none;
+    border-right: none;
+    border-left: 5px solid var(--secondary-clr);
+    border-bottom: 5px solid var(--secondary-clr);
+}
+
+/*  templates */
+.button-text {
+   font-weight:600; 
+   font-size: 25px;
+   color: var(--accent-white);
+}
+
+.title-template {
+   color: var(--secondary-clr);
+   font-weight:bold; 
+   font-size: 50px;
+   
+}
+
+button:hover {
+    transform: translateY(-5px);
+    transition: 0.2s all ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+}
+
+button:not(:hover) {
+    
+    transition: 0.2s all ease-in-out
+}
+
+
+/* animations */
+
+@keyframes buttonClicked {
+    50% {
+        transform: scale(0.9)
+    }
+    
+    100% {
+        transform: scale(1)
+    }
+    
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0)
+    }
+    to {
+        transform: translateX(1500px)
+    }
+}
+
+
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(-1500px)
+    }
+    to {
+        transform: translateX(0)
+    }
+}
+
